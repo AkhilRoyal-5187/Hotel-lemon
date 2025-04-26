@@ -9,10 +9,10 @@ const HeroSlider = () => {
 
   // Define the badges with icons
   const badges = [
-    { text: 'Free Wi-Fi', icon: <FaWifi className="w-6 h-6 text-white" /> },
-    { text: 'Business Friendly', icon: <FaBriefcase className="w-6 h-6 text-white" /> },
-    { text: 'Multi-cuisine Dining', icon: <FaUtensils className="w-6 h-6 text-white" /> },
-    { text: 'Prime Location', icon: <FaMapMarkerAlt className="w-6 h-6 text-white" /> },
+    { text: 'Free Wi-Fi', icon: <FaWifi className="w-6 h-6 text-white text-xs" /> },
+    { text: 'Business Friendly', icon: <FaBriefcase className="w-6 h-6 text-white text-xs" /> },
+    { text: 'Multi-cuisine Dining', icon: <FaUtensils className="w-6 h-6 text-white text-xs" /> },
+    { text: 'Prime Location', icon: <FaMapMarkerAlt className="w-6 h-6 text-white text-xs" /> },
   ];
 
   return (

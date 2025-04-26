@@ -20,7 +20,7 @@ import Slider2 from './img/heroSlider/2.jpg';
 import Slider3 from './img/heroSlider/3.jpg';
 
 export { ReactComponent as LogoDark } from './img/logo.svg';
-export { ReactComponent as LogoWhite } from './img/logo.svg';
+export { ReactComponent as LogoWhite } from './img/logo_gold.svg';
 
 const images = {
     Slider1,
