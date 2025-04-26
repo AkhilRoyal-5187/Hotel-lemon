@@ -79,20 +79,24 @@ const Footer = () => {
         </a>
 
         <div style={contactStyle}>
-          <div style={contactButtonStyle}>
+          {/* <div style={contactButtonStyle}>
             <span>📞</span> <span>Contact</span>
-          </div>
+          </div> */}
+          
           <div style={contactButtonStyle}>
-            <span>📍</span> <span>Hotel Lemon Park, Vishakapatnam</span>
-          </div>
-          <div style={contactButtonStyle}>
-            <span>📞</span> <span>+91-8121 55 9494</span>
-          </div>
-          <div style={contactButtonStyle}>
-           <span>📧</span> <span>info@hotellemonpark.in</span>
+            <span>📞</span> <span>8121 55 9494</span>
           </div>
           <div style={contactButtonStyle}>
             <span>🕑</span> <span>Reception: 24×7</span>
+          </div>
+          
+          
+          <div style={contactButtonStyle}>
+           <span>📧</span> <span>info@hotellemonpark.in</span>
+          </div>
+          
+          <div style={contactButtonStyle}>
+            <span>📍</span> <span>Hotel Lemon Park, Vishakapatnam</span>
           </div>
         </div>
 
