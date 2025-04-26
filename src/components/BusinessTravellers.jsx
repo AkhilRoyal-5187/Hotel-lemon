@@ -1,10 +1,9 @@
 import React from 'react';
-import { FaDownload, FaEnvelope } from 'react-icons/fa'; // Icons for CTA buttons
+import { FaDownload, FaEnvelope } from 'react-icons/fa'; 
 
 const BusinessTravelers = () => {
   return (
     <section className="relative py-16 px-4 text-white bg-white bg-cover bg-center">
-      {/* Light white background */}
       <div className="relative z-10 max-w-7xl mx-auto text-center">
         <h2 className="text-4xl lg:text-5xl font-extrabold text-yellow-500 mb-6">
           Work Meets Comfort
@@ -13,7 +12,6 @@ const BusinessTravelers = () => {
           Your ideal base in Vizag for meetings, conferences, and business trips.
         </p>
 
-        {/* Features Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-12 px-4">
           {[
             "Conference Room (20–50 pax)",

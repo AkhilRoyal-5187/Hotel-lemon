@@ -39,7 +39,7 @@ const HeroSlider = () => {
               <h2 className='mb-6'>
                 A modern business hotel in the heart of Vizag – where comfort meets convenience for travelers, corporates, and event guests.
               </h2>
-              <button className='btn btn-lg btn-primary mx-auto mt-6'>{btnNext}</button>
+              <button className='btn btn-lg btn-primary mx-auto mt-6 text-black'>{btnNext}</button>
             </div>
 
             {/* Background Image */}

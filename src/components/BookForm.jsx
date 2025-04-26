@@ -29,7 +29,7 @@ const BookForm = () => {
 
         <button
           type='submit'
-          className='btn btn-primary'
+          className='btn btn-primary text-black'
           onClick={(e) => handleCheck(e)}
         >
           Check Now

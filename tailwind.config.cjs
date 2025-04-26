@@ -19,10 +19,10 @@ module.exports = {
     },
     extend: {
       colors: {
-        primary: '#0a0a0a',
+        primary: '#FFDF00',
         accent: {
-          DEFAULT: '#a37d4c',
-          hover: '#967142',
+          DEFAULT: '#FFD700',
+          hover: ' #F0E68C',
         },
         gold: {
           500: '#FFD700', // Custom gold color
