@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { FaStar, FaChevronLeft, FaChevronRight, FaRegHeart } from 'react-icons/fa';
+import { FaStar, FaRegHeart } from 'react-icons/fa';
+import { motion } from 'framer-motion';
 
 const GuestReviews = () => {
   const sectionStyle = {
@@ -8,8 +9,8 @@ const GuestReviews = () => {
     alignItems: 'center',
     justifyContent: 'center',
     minHeight: '100vh',
-    width: '100vw',
-    padding: '60px',
+    width: '100%',
+    padding: '40px 20px',
     background: 'linear-gradient(135deg, #fff8e1, #ffeb3b)',
     textAlign: 'center',
     overflow: 'hidden',
@@ -17,65 +18,69 @@ const GuestReviews = () => {
   };
 
   const titleStyle = {
-    fontSize: '3.5em',
+    fontSize: '2.5rem',
     color: '#b8860b',
-    marginBottom: '60px',
+    marginBottom: '40px',
     textShadow: '2px 2px 4px rgba(0, 0, 0, 0.15)',
-    letterSpacing: '1.5px',
+    letterSpacing: '1.2px',
   };
 
   const carouselContainerStyle = {
     position: 'relative',
-    width: '85%',
+    width: '95%',
     maxWidth: '1000px',
+    margin: '0 auto',
+    overflow: 'hidden', // added to contain the cards
   };
 
   const carouselWrapperStyle = {
     display: 'flex',
     transition: 'transform 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
     alignItems: 'center',
+    overflow: 'visible', // changed from hidden to visible
   };
 
   const reviewCardStyle = {
-    flex: '0 0 70%',
+    flex: '0 0 100%',
     backgroundColor: '#fffaf0',
     border: '1px solid #eee8aa',
     borderRadius: '16px',
-    padding: '50px',
-    margin: '0 15%',
-    boxShadow: '0 12px 24px rgba(0, 0, 0, 0.1)',
+    padding: '30px 20px',
+    margin: '0',
+    boxShadow: '0 6px 12px rgba(0, 0, 0, 0.1)',
     textAlign: 'left',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
+    minHeight: '300px',
   };
 
   const starContainerStyle = {
-    marginBottom: '20px',
-    display: 'flex', // Make stars horizontal
-    justifyContent: 'center', // Center the stars
+    marginBottom: '15px',
+    display: 'flex',
+    justifyContent: 'center',
   };
 
   const starStyle = {
     color: '#ffd700',
-    marginRight: '5px', // Reduced right margin
-    fontSize: '1.2em', // Slightly smaller stars
+    marginRight: '3px',
+    fontSize: '1em',
   };
 
   const reviewTextStyle = {
-    fontSize: '1.2em',
-    lineHeight: '1.8',
+    fontSize: '1rem',
+    lineHeight: '1.6',
     color: '#555',
     fontStyle: 'italic',
-    marginBottom: '30px',
+    marginBottom: '20px',
   };
 
   const wishImageContainerStyle = {
-    width: '60px', // Further decreased image size
-    height: '60px', // Further decreased image size
+    width: '50px',
+    height: '50px',
     borderRadius: '50%',
     overflow: 'hidden',
-    marginBottom: '20px',
+    marginBottom: '15px',
     alignSelf: 'center',
   };
 
@@ -88,59 +93,35 @@ const GuestReviews = () => {
 
   const wishIconStyle = {
     color: '#ff6f61',
-    fontSize: '1.6em', // Slightly smaller icon
+    fontSize: '1.4em',
     alignSelf: 'flex-end',
   };
 
-  const navigationButtonStyle = {
-    position: 'absolute',
-    top: '50%',
-    transform: 'translateY(-50%)',
-    background: 'rgba(255, 255, 255, 0.8)',
-    border: 'none',
-    fontSize: '2.5em',
-    color: '#b8860b',
-    cursor: 'pointer',
-    padding: '20px',
-    borderRadius: '50%',
-    zIndex: 10,
-    boxShadow: '3px 3px 8px rgba(0, 0, 0, 0.1)',
-    transition: 'background-color 0.3s ease-in-out, color 0.3s ease-in-out',
-  };
-
-  const navigationButtonHoverStyle = {
-    backgroundColor: 'rgba(255, 255, 255, 0.95)',
-    color: '#daa520',
-  };
-
-  const prevButtonStyle = {
-    left: '30px',
-  };
-
-  const nextButtonStyle = {
-    right: '30px',
-  };
-
   const ctaStyle = {
-    marginTop: '70px',
+    marginTop: '40px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: '15px',
   };
 
   const ctaButton = {
     backgroundColor: '#daa520',
     color: '#fff',
     border: 'none',
-    borderRadius: '12px',
-    padding: '20px 35px',
+    borderRadius: '10px',
+    padding: '15px 25px',
     cursor: 'pointer',
-    margin: '0 20px',
-    fontSize: '1.3em',
+    fontSize: '1.1rem',
     textDecoration: 'none',
-    boxShadow: '0 6px 12px rgba(0, 0, 0, 0.1)',
-    transition: 'background-color 0.3s ease-in-out',
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.08)',
+    transition: 'background-color 0.3s ease-in-out, transform 0.2s ease',
+    whiteSpace: 'nowrap',
   };
 
   const ctaButtonHoverStyle = {
     backgroundColor: '#b8860b',
+    transform: 'scale(1.04)',
   };
 
   const reviews = [
@@ -167,28 +148,20 @@ const GuestReviews = () => {
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isPrevHovered, setIsPrevHovered] = useState(false);
-  const [isNextHovered, setIsNextHovered] = useState(false);
   const [isReadMoreHovered, setIsReadMoreHovered] = useState(false);
   const [isWriteReviewHovered, setIsWriteReviewHovered] = useState(false);
 
-  const goToPrevious = () => {
-    setCurrentIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : reviews.length - 1));
-  };
-
-  const goToNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex < reviews.length - 1 ? prevIndex + 1 : 0));
-  };
-
   useEffect(() => {
-    const intervalId = setInterval(goToNext, 7000);
+    const intervalId = setInterval(() => {
+        setCurrentIndex(prevIndex => (prevIndex + 1) % reviews.length);
+    }, 7000);
     return () => clearInterval(intervalId);
-  }, []);
+  }, [reviews.length]);
 
   const renderStars = (rating) => {
     const stars = [];
     for (let i = 0; i < 5; i++) {
-      stars.push(<FaStar key={i} style={i < rating ? starStyle : { color: '#eee8aa', marginRight: '5px', fontSize: '1.2em' }} />);
+      stars.push(<FaStar key={i} style={i < rating ? starStyle : { color: '#eee8aa', marginRight: '3px', fontSize: '1em' }} />);
     }
     return <div style={starContainerStyle}>{stars}</div>;
   };
@@ -199,22 +172,10 @@ const GuestReviews = () => {
     <section style={sectionStyle}>
       <h2 style={titleStyle}>What Our Guests Say</h2>
       <div style={carouselContainerStyle}>
-        <button
-          style={{
-            ...navigationButtonStyle,
-            ...prevButtonStyle,
-            ...(isPrevHovered && navigationButtonHoverStyle),
-          }}
-          onClick={goToPrevious}
-          onMouseEnter={() => setIsPrevHovered(true)}
-          onMouseLeave={() => setIsPrevHovered(false)}
-        >
-          <FaChevronLeft />
-        </button>
         <div style={{ ...carouselWrapperStyle, transform: `translateX(${transformValue})` }}>
           {reviews.map((review, index) => (
             <div key={index} style={reviewCardStyle}>
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '20px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '15px' }}>
                 {review.wishImage && (
                   <div style={wishImageContainerStyle}>
                     <img src={review.wishImage} alt="Luxury Stay" style={wishImageStyle} />
@@ -227,18 +188,6 @@ const GuestReviews = () => {
             </div>
           ))}
         </div>
-        <button
-          style={{
-            ...navigationButtonStyle,
-            ...nextButtonStyle,
-            ...(isNextHovered && navigationButtonHoverStyle),
-          }}
-          onClick={goToNext}
-          onMouseEnter={() => setIsNextHovered(true)}
-          onMouseLeave={() => setIsNextHovered(false)}
-        >
-          <FaChevronRight />
-        </button>
       </div>
       <div style={ctaStyle}>
         <a
@@ -249,7 +198,6 @@ const GuestReviews = () => {
         >
           Read More Reviews
         </a>
-        <span> | </span>
         <a
           href="/write-a-review"
           style={{ ...ctaButton, ...(isWriteReviewHovered && ctaButtonHoverStyle) }}
@@ -259,6 +207,39 @@ const GuestReviews = () => {
           Write a Review
         </a>
       </div>
+      <style jsx>{`
+        @media (min-width: 768px) {
+          .reviewCardStyle {
+            flex: 0 0 80%;
+            margin: 0 10%;
+          }
+          .titleStyle {
+            font-size: 3rem;
+          }
+          .reviewTextStyle {
+            font-size: 1.1rem;
+            line-height: 1.7;
+          }
+          .ctaStyle {
+            flex-direction: row;
+            justify-content: center;
+          }
+        }
+
+        @media (min-width: 1200px) {
+          .reviewCardStyle {
+            flex: 0 0 70%;
+            margin: 0 15%;
+          }
+          .titleStyle {
+            font-size: 3.5rem;
+          }
+          .reviewTextStyle {
+            font-size: 1.2rem;
+            line-height: 1.8;
+          }
+        }
+      `}</style>
     </section>
   );
 };

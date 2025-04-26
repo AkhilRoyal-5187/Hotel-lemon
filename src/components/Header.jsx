@@ -20,13 +20,7 @@ const Header = () => {
 
   const navLinks = ['Book your stay', 'Location', 'Contact'];
 
-  // Badges (stickers)
-  // const badges = [
-  //   { text: 'Free Wi-Fi' },
-  //   { text: 'Business Friendly' },
-  //   { text: 'Multi-cuisine Dining' },
-  //   { text: 'Prime Location' },
-  // ];
+
 
   return (
     <header
@@ -36,7 +30,6 @@ const Header = () => {
 
       <div className='container mx-auto flex flex-col lg:flex-row items-center lg:justify-between gap-y-6 lg:gap-y-0'>
 
-        {/* Logo */}
         <Link to="/" onClick={resetRoomFilterData}>
           {
             header
@@ -45,7 +38,6 @@ const Header = () => {
           }
         </Link>
 
-        {/* Nav */}
         <nav className={`${header ? 'text-primary' : 'text-white'}
         flex gap-x-4 lg:gap-x-8 font-tertiary tracking-[3px] text-[15px] items-center uppercase`}>
           {
@@ -59,14 +51,7 @@ const Header = () => {
 
       </div>
 
-      {/* Stickers/Badges at the bottom */}
-      {/* <div className="absolute bottom-0 w-full flex justify-center gap-6 py-4 bg-transparent">
-        {badges.map((badge, index) => (
-          <div key={index} className="px-4 py-2 text-xs font-bold text-gold-500">
-            {badge.text}
-          </div>
-        ))}
-      </div> */}
+      
 
     </header>
   );

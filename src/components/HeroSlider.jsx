@@ -47,18 +47,16 @@ const HeroSlider = () => {
               <img className='object-cover h-full w-full' src={bg} alt="slide background" />
             </div>
 
-            {/* Dark Overlay */}
             <div className='absolute w-full h-full bg-black/70' />
 
-            {/* Badges Section */}
-            <div className="absolute bottom-4 w-full flex justify-center gap-4 py-4 bg-transparent">
+            <div className="absolute bottom-4 w-full flex justify-center gap-2 sm:gap-4 py-2 sm:py-4 bg-transparent flex-wrap">
               {badges.map((badge, index) => (
-                <div key={index} className="flex items-center gap-2 px-4 py-2 text-xs font-bold text-white">
+                <div key={index} className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1 sm:py-2 text-xs font-bold text-white whitespace-nowrap">
                   {badge.icon}
                   <span>{badge.text}</span>
                 </div>
               ))}
-            </div>
+          </div>
 
           </SwiperSlide>
         )
