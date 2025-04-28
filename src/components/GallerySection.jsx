@@ -42,10 +42,10 @@ const GallerySection = () => {
     padding: '80px 20px',
     background: 'linear-gradient(135deg, #ffeb3b, #d4af37)', 
     textAlign: 'center',
-    borderRadius: '12px',
+    borderRadius: '20px',
     boxShadow: '0 8px 20px rgba(0, 0, 0, 0.1)',
     margin: '40px auto', 
-    maxWidth: '1200px', 
+    maxWidth: '98%', 
     position: 'relative', 
     overflow: 'hidden', 
   };

@@ -7,7 +7,7 @@ const LocationSection = () => {
     backgroundColor: '#9b111e',
     padding: '30px', // Increased padding
     borderRadius: '40px',
-    margin: '20px 20px',
+    margin: '10px 20px',
     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
     textAlign: 'center',
   };

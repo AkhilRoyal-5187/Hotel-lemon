@@ -151,7 +151,7 @@ const BusinessTravelers = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative py-12 px-4 text-white bg-cover bg-center rounded-[40px] mx-8 mt-20"
+      className="relative py-12 px-4 text-white bg-cover bg-center rounded-[40px] mx-3 mt-20"
       style={{
         backgroundColor: '#d4af37',
       }}

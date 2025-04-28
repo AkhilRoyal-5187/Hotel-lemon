@@ -5,20 +5,14 @@ import CheckIn from './components/CheckIn';
 import BusinessTravelers from './components/BusinessTravellers';
 import LocationSection from './components/LocationSection';
 import GuestReviews from './components/GuestReview';
-import GallerySection from './components/GallerySection'
+import GallerySection from './components/GallerySection';
+import Facilities from './components/Facilities';
 
 
 
 const App = () => {
 
-  // const paths = [
-  //   { path: '/', element: <Home /> },
-  //   { path: '/room/:id', element: <RoomDetails /> },
-  //   { path: '*', element: <PageNotFound /> },
-  // ]
-
-  // const router = createBrowserRouter(paths);
-  // <RouterProvider router={router} /> 
+ 
 
   return (
 
@@ -38,6 +32,7 @@ const App = () => {
         <LocationSection/>
         <GuestReviews/>
         <GallerySection/>
+        <Facilities/>
         <Footer />
 
       </BrowserRouter>
