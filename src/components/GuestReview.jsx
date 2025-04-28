@@ -1,25 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { FaStar, FaRegHeart } from 'react-icons/fa';
-import { motion } from 'framer-motion';
+import { motion, useAnimation } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
 
 const GuestReviews = () => {
   const sectionStyle = {
+    marginTop: '60px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    minHeight: '100vh',
-    width: '100%',
+    minHeight: '70vh',
+    width: '98%',
     padding: '40px 20px',
-    background: 'linear-gradient(135deg, #fff8e1, #ffeb3b)',
+    background: 'linear-gradient(135deg, #d4af37, #9b111e)',
     textAlign: 'center',
     overflow: 'hidden',
     fontFamily: 'serif',
+    margin: '100px 30px',
+    borderRadius: '40px',
   };
 
   const titleStyle = {
     fontSize: '2.5rem',
-    color: '#b8860b',
+    color: '#9b111e',
     marginBottom: '40px',
     textShadow: '2px 2px 4px rgba(0, 0, 0, 0.15)',
     letterSpacing: '1.2px',
@@ -30,14 +34,14 @@ const GuestReviews = () => {
     width: '95%',
     maxWidth: '1000px',
     margin: '0 auto',
-    overflow: 'hidden', // added to contain the cards
+    overflow: 'hidden',
   };
 
   const carouselWrapperStyle = {
     display: 'flex',
-    transition: 'transform 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+    transition: 'transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275)', // Increased speed (halved duration)
     alignItems: 'center',
-    overflow: 'visible', // changed from hidden to visible
+    overflow: 'visible',
   };
 
   const reviewCardStyle = {
@@ -150,11 +154,12 @@ const GuestReviews = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isReadMoreHovered, setIsReadMoreHovered] = useState(false);
   const [isWriteReviewHovered, setIsWriteReviewHovered] = useState(false);
+  const [ref, inView] = useInView({ threshold: 0.2 });
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-        setCurrentIndex(prevIndex => (prevIndex + 1) % reviews.length);
-    }, 7000);
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % reviews.length);
+    }, 3500); // Changed interval to 3500ms (7000 / 2)
     return () => clearInterval(intervalId);
   }, [reviews.length]);
 
@@ -168,13 +173,34 @@ const GuestReviews = () => {
 
   const transformValue = -currentIndex * 100 + '%';
 
+  const animation = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { type: 'spring', stiffness: 50, damping: 10, duration: 1 },
+    },
+  };
+
   return (
-    <section style={sectionStyle}>
+    <motion.section
+      style={sectionStyle}
+      ref={ref}
+      variants={animation}
+      initial="hidden"
+      animate={inView ? 'visible' : 'hidden'}
+    >
       <h2 style={titleStyle}>What Our Guests Say</h2>
       <div style={carouselContainerStyle}>
         <div style={{ ...carouselWrapperStyle, transform: `translateX(${transformValue})` }}>
           {reviews.map((review, index) => (
-            <div key={index} style={reviewCardStyle}>
+            <motion.div
+              key={index}
+              style={reviewCardStyle}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1, transition: { duration: 0.4 } }}
+              viewport={{ once: true }}
+            >
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '15px' }}>
                 {review.wishImage && (
                   <div style={wishImageContainerStyle}>
@@ -185,7 +211,7 @@ const GuestReviews = () => {
               </div>
               <p style={reviewTextStyle}>"{review.text}"</p>
               <FaRegHeart style={wishIconStyle} />
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -240,7 +266,7 @@ const GuestReviews = () => {
           }
         }
       `}</style>
-    </section>
+    </motion.section>
   );
 };
 

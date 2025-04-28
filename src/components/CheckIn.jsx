@@ -17,11 +17,12 @@ const CheckIn = () => {
     if (inView) {
       controls.start({
         opacity: 1,
-        y: 0,
+        y: 0, // Animate to the final position (y=0)
         transition: { duration: 0.6, ease: 'easeOut' },
       });
     } else {
-      controls.start({ opacity: 0, y: 20, transition: { duration: 0.3 } }); // Add a transition for hiding as well
+      // Optional: animate out by moving up slightly
+      controls.start({ opacity: 0, y: -20, transition: { duration: 0.3 } });
     }
   }, [controls, inView]);
 
@@ -29,7 +30,7 @@ const CheckIn = () => {
     <motion.div
       className='relative flex items-center justify-end h-full'
       ref={ref}
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: -20 }} // Start from above (negative y)
       animate={controls}
     >
       <div className='absolute z-10 pr-8'>
