@@ -6,7 +6,7 @@ const Room = ({ room }) => {
   const { id, name, image, size, maxPerson, description, price } = room ?? {};
 
   return (
-    <div className='bg-white shadow-2xl min-h-[500px] group'>
+    <div className='bg-white shadow-2xl min-h-[500px] group '>
 
       <div className='overflow-hidden'>
         <img src={image} alt="img" className='group-hover:scale-110 transition-all duration-300 w-full' />
@@ -43,7 +43,7 @@ const Room = ({ room }) => {
       {/* name and description */}
       <div className='text-center'>
         <Link to={`/room/${id}`}>
-          <h3 className="h3 text-yellow-600">{name}</h3>
+          <h3 className="h3 text-[#9b111e]">{name}</h3>
         </Link>
 
         <p className='max-w-[300px] mx-auto mb-3 lg:mb-6 text-gray-600'>{description.slice(0, 56)}..</p>
@@ -52,7 +52,7 @@ const Room = ({ room }) => {
       {/* button */}
       <Link
         to={`/room/${id}`}
-        className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded max-w-[240px] mx-auto block duration-300"
+        className="bg-[#9b111e] hover:bg-[#ec2c3f] text-white font-bold py-2 px-4 rounded max-w-[240px] mx-auto block duration-300"
       >
         Book now from ${price}
       </Link>

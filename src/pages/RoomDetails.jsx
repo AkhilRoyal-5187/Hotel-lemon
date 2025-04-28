@@ -41,7 +41,9 @@ const RoomDetails = () => {
 
             <div className='mt-12'>
               <h3 className='h3 mb-3'></h3>
-              <p className='mb-12'> Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis accusantium sapiente quas quos explicabo, odit nostrum? Reiciendis illum dolor eos dicta. Illum vero at hic nostrum sint et quod porro. </p>
+              <p className='mb-12'> 
+                The {name} is the perfect choice for solo travelers or couples looking for a cozy yet stylish space. Thoughtfully designed with contemporary decor, this room features a plush queen-sized bed for a restful night's sleep, a spacious work desk for business guests, and a comfortable seating area to relax. The 49" LED TV ensures in-room entertainment, while the en-suite bathroom with a shower offers all the essential amenities. With high-speed Wi-Fi, air conditioning, and a peaceful ambiance, this room is ideal for those seeking comfort and convenience in a compact space
+              </p>
 
               {/* icons grid */}
               <div className="grid grid-cols-3 gap-6 mb-12">
@@ -81,7 +83,6 @@ const RoomDetails = () => {
             <div>
               <h3 className='h3'>Hotel Rules</h3>
               <p className='mb-6 text-justify'>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi dolores iure fugiat eligendi illo est, aperiam quasi distinctio necessitatibus suscipit nemo provident eaque voluptas earum.
               </p>
 
               <ul className='flex flex-col gap-y-4'>
