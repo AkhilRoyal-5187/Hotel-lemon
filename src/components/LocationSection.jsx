@@ -4,7 +4,10 @@ import { useInView } from 'react-intersection-observer';
 
 const LocationSection = () => {
   const sectionStyle = {
-    backgroundColor: '#9b111e',
+    // Removed backgroundColor
+    // backgroundColor: '#9b111e',
+    // Added gradient background using red shades
+    background: 'linear-gradient(to bottom, #7a0c15, #9b111e)', // Example gradient from a darker red to the original shade
     padding: '30px', // Increased padding
     borderRadius: '40px',
     margin: '10px 20px',
@@ -14,14 +17,15 @@ const LocationSection = () => {
 
   const titleStyle = {
     color: '#d4af37',
-    fontSize: '2.2em', // Slightly increased title size
-    marginBottom: '12px', // Slightly increased margin
+    fontSize: '3em', 
+    marginBottom: '12px',
+    fontFamily: 'Gilda Display',
   };
 
   const subheadlineStyle = {
     color: '#808000',
-    marginBottom: '20px', // Increased margin
-    fontSize: '1.1em', // Slightly increased font size
+    marginBottom: '20px', 
+    fontSize: '1.1em',
   };
 
   const mapContainerStyle = {
@@ -68,7 +72,7 @@ const LocationSection = () => {
       <motion.h2 style={titleStyle} variants={{
         hidden: { opacity: 0, y: -20 },
         visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.2 } },
-      }} initial="hidden" animate={inView ? "visible" : "hidden"}>
+      }} initial="hidden" animate={inView ? "visible" : "hidden"} >
         In the Middle of It All
       </motion.h2>
       <motion.p style={subheadlineStyle} variants={{
