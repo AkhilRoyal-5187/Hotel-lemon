@@ -11,13 +11,12 @@ const GuestReviews = () => {
     alignItems: 'center',
     justifyContent: 'center',
     minHeight: '70vh',
-    width: '98%',
+    width: '100%',
     padding: '40px 20px',
     background: 'linear-gradient(135deg, #d4af37, #9b111e)',
     textAlign: 'center',
     overflow: 'hidden',
     fontFamily: 'serif',
-    margin: '100px 30px',
     borderRadius: '40px',
   };
 

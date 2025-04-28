@@ -1,102 +1,118 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { sliderData } from '../constants/data';
 import { EffectFade, Autoplay } from 'swiper';
 import 'swiper/css/effect-fade';
 import 'swiper/css';
+// Import Fa icons - ensure they inherit or are explicitly set to the desired color
 import { FaWifi, FaBriefcase, FaUtensils, FaMapMarkerAlt } from 'react-icons/fa';
-// import './HeroSlider.css'; // Make sure your CSS is correctly linked
+import { motion, useAnimation } from 'framer-motion'; // Import motion, useAnimation
+import { useInView } from 'react-intersection-observer'; // Import useInView
 
 const HeroSlider = () => {
   const titleRefs = useRef([]);
   const intervalRefs = useRef([]);
   const swiperRef = useRef(null);
 
+  // State to track the currently active slide index
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+
+  // *** Animation hooks for the entire Swiper component's visibility ***
+  // This is the trigger for the badge animations
+  const controls = useAnimation();
+  const [swiperRefForView, inView] = useInView({ // Ref for the Swiper itself for inView detection
+    threshold: 0.1, // Adjust threshold as needed
+    triggerOnce: false, // *** THIS SETTING MAKES THE ANIMATION REPEAT ON EVERY SCROLL INTO VIEW ***
+  });
+
   const startTypingAnimation = (index) => {
     const titleRef = titleRefs.current[index];
     const text = sliderData[index]?.title || '';
     let i = 0;
 
-    // Ensure the ref and text exist
     if (!titleRef || !text) return;
 
-    // Clear any existing interval for this index
     clearInterval(intervalRefs.current[index]);
 
-    // Function to perform the typing effect
     const typeWriter = () => {
       if (i < text.length) {
         titleRef.textContent += text.charAt(i);
         i++;
       } else {
-        clearInterval(intervalRefs.current[index]); // Stop interval when typing is complete
+        clearInterval(intervalRefs.current[index]);
       }
     };
 
-    titleRef.textContent = ''; // Clear the text before starting animation
-    // Store the interval ID
-    intervalRefs.current[index] = setInterval(typeWriter, 100); // Adjust speed (milliseconds per character)
+    titleRef.textContent = '';
+    intervalRefs.current[index] = setInterval(typeWriter, 100);
   };
 
   useEffect(() => {
-    // Start typing animation for the initial slide (index 0) on mount
-    // Add a small initial delay to allow Swiper to initialize
+    // Initial typing animation on mount
     const initialAnimationTimeout = setTimeout(() => {
       startTypingAnimation(0);
-    }, 300); // Initial delay, adjust as needed
+    }, 300);
 
-    // Cleanup function to clear all intervals and the initial timeout
+    // Cleanup function
     return () => {
       intervalRefs.current.forEach(clearInterval);
       clearTimeout(initialAnimationTimeout);
     };
-  }, []); // Empty dependency array means this runs once on mount
+  }, []);
 
   const handleSlideChange = (swiper) => {
     const activeIndex = swiper.activeIndex;
-    console.log('Slide Change to index:', activeIndex); // Optional: for debugging
+    setCurrentSlideIndex(activeIndex); // Update the state
 
-    // Start animation for the new active slide
+    // Typing animation logic remains tied to slide change
     // Add a small delay specifically for the first slide when looping back
     if (activeIndex === 0) {
-       // Delay the start of typing animation slightly when looping back to slide 0
       setTimeout(() => {
          startTypingAnimation(activeIndex);
-      }, 150); // Small delay (e.g., 150ms), adjust for visual smoothness
+      }, 150);
     } else {
-      // For other slides, start animation immediately on slide change
       startTypingAnimation(activeIndex);
     }
   };
 
   const handleSwiper = (swiper) => {
     swiperRef.current = swiper;
+     // *** Attach the inView ref helper to the Swiper's DOM element ***
+    swiperRefForView(swiper.el);
   };
 
   const badges = [
-    { text: 'Free Wi-Fi', icon: <FaWifi className="w-6 h-6 text-white text-xs" /> },
-    { text: 'Business Friendly', icon: <FaBriefcase className="w-6 h-6 text-white text-xs" /> },
-    { text: 'Multi-cuisine Dining', icon: <FaUtensils className="w-6 h-6 text-white text-xs" /> },
-    { text: 'Prime Location', icon: <FaMapMarkerAlt className="w-6 h-6 text-white text-xs" /> },
+    // Icons using yellow text class
+    { text: 'Free Wi-Fi', icon: <FaWifi className="w-6 h-6 text-yellow-400 text-xs" /> },
+    { text: 'Business Friendly', icon: <FaBriefcase className="w-6 h-6 text-yellow-400 text-xs" /> },
+    { text: 'Multi-cuisine Dining', icon: <FaUtensils className="w-6 h-6 text-yellow-400 text-xs" /> },
+    { text: 'Prime Location', icon: <FaMapMarkerAlt className="w-6 h-6 text-yellow-400 text-xs" /> },
   ];
 
+  // Animation variants for individual badges
+  const badgeVariants = {
+    hidden: { opacity: 0, y: 20 }, // Start slightly below and hidden
+    visible: { opacity: 1, y: 0 }, // Animate to visible and correct position
+  };
+
   return (
+    // *** The Swiper component itself will be observed for viewport visibility ***
+    // The ref from useInView is applied via handleSwiper -> swiperRefForView(swiper.el)
     <Swiper
       modules={[EffectFade, Autoplay]}
       effect={'fade'}
-      loop={true} // Ensure loop is enabled
+      loop={true}
       autoplay={{
-        delay: 4000, // Increased delay slightly for better timing
+        delay: 4000,
         disableOnInteraction: false,
       }}
       className='heroSlider h-[600px] lg:h-[860px]'
-      onSlideChange={handleSlideChange} // Trigger animation on slide change
-      onSwiper={handleSwiper} // Get the Swiper instance
+      onSlideChange={handleSlideChange}
+      onSwiper={handleSwiper} // Use handleSwiper to get ref and attach inView ref
     >
       {sliderData.map(({ id, title, bg, btnNext }, index) => (
         <SwiperSlide className='h-full relative flex justify-center items-center' key={id}>
           <div className='z-20 text-white text-center'>
-            {/* You can keep this div or remove if not needed */}
             <div className='uppercase font-tertiary tracking-[6px] mb-5'></div>
             <h1
               ref={(el) => (titleRefs.current[index] = el)}
@@ -113,12 +129,26 @@ const HeroSlider = () => {
             <img className='object-cover h-full w-full' src={bg} alt="slide background" />
           </div>
           <div className='absolute w-full h-full bg-black/70' /> {/* Overlay */}
-          <div className="absolute bottom-4 w-full flex justify-center gap-2 sm:gap-4 py-2 sm:py-4 bg-transparent flex-wrap">
+
+          {/* *** Badges Container - Position and Color Updated *** */}
+          <div className="absolute bottom-12 w-full flex justify-center gap-2 sm:gap-4 py-2 sm:py-4 bg-transparent flex-wrap">
             {badges.map((badge, idx) => (
-              <div key={idx} className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1 sm:py-2 text-xs font-bold text-white whitespace-nowrap">
+              <motion.div
+                key={idx}
+                // Text color set to yellow-400
+                className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1 sm:py-2 text-xs font-bold text-yellow-400 whitespace-nowrap"
+                variants={badgeVariants}
+                initial="hidden"
+                // *** Animation controlled SOLELY by the inView status of the Swiper ***
+                // Animate to 'visible' if the Swiper is in view, otherwise go to 'hidden'
+                animate={inView ? "visible" : "hidden"}
+                // *** Transition delay based solely on inView status and index ***
+                transition={{ delay: inView ? idx * 0.1 : 0, duration: 0.5, ease: 'easeOut' }}
+              >
+                {/* Icons already updated to text-yellow-400 in the badges array */}
                 {badge.icon}
                 <span>{badge.text}</span>
-              </div>
+              </motion.div>
             ))}
           </div>
         </SwiperSlide>
