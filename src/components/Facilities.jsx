@@ -80,7 +80,7 @@ const FacilitiesSection = () => {
             variants={containerVariants}
             initial="hidden"
             animate={controls}
-            className="py-[110px] bg-gradient-to-br from-gray-900 to-[#9b111e] mx-2 rounded-3xl"
+            className="py-[110px] bg-gradient-to-br from-gray-900 to-[#9b111e] mx-2 rounded-3xl mt-8"
         >
             <div className="Container">
                 <div className="text-center mx-auto px-5 sm:px-8 md:px-[80px] lg:px-[120px] xl:px-[200px] 2xl:px-[335px]" data-aos="fade-up" data-aos-duration="1000">
@@ -94,7 +94,7 @@ const FacilitiesSection = () => {
                     <motion.h1 className="text-2xl md:text-3xl 2xl:text-[38px] leading-[38px] lg:leading-[44px] 2xl:leading-[52px] text-white mb-[6px] font-Garamond font-semibold uppercase" variants={itemVariants}>
                         HOTEL&apos;S FACILITIES
                     </motion.h1>
-                    <motion.p className="font-Lora leading-[26px] text-lightGray font-normal text-sm sm:text-base" variants={itemVariants}>
+                    <motion.p className="font-Lora leading-[26px] text-white font-normal text-sm sm:text-base" variants={itemVariants}>
                         Proactively morph optimal infomediaries rather than accurate expertise. Intrinsicly progressive resources rather than resource-leveling
                     </motion.p>
                 </div>

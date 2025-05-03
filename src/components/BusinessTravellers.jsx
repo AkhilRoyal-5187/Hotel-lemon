@@ -1,202 +1,139 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { FaDownload, FaEnvelope } from 'react-icons/fa';
-import SplitType from 'split-type';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import 'aos/dist/aos.css';
-import AOS from 'aos'; // Keeping AOS init, although GSAP is handling main scroll animations
-
-gsap.registerPlugin(ScrollTrigger);
+import { motion, useAnimation } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
+import { LogoWhite } from "../assets"; // Assuming LogoWhite is correctly imported
 
 const BusinessTravelers = () => {
-  const sectionRef = useRef(null);
-  const titleRef = useRef(null);
-  const subtitleRef = useRef(null);
-  const featuresRefs = useRef([]);
-  const downloadButtonRef = useRef(null);
-  const enquireButtonRef = useRef(null);
-
-  useEffect(() => {
-    // Initialize AOS (if you still need it for other elements or default behavior)
-    AOS.init({
-      duration: 1000,
-      once: true, // Keeping once: true for AOS, as GSAP handles repeat
-      easing: 'ease-out-cubic',
+    const controls = useAnimation();
+    const [ref, inView] = useInView({
+        threshold: 0.1, // Adjust as needed
+        triggerOnce: false, // Animation triggers every time it comes into view
     });
 
-    // Make sure the DOM elements exist before splitting
-    if (!titleRef.current || !subtitleRef.current) return;
-
-    const title = new SplitType(titleRef.current, { types: 'words, chars' });
-    const subtitle = new SplitType(subtitleRef.current, { types: 'words' });
-
-    // Animation for the entire section
-    gsap.fromTo(
-      sectionRef.current,
-      { opacity: 0, y: 50 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 80%',
-          toggleActions: 'play reverse play reverse', // Repeat on scroll in/out
-        },
-      }
-    );
-
-    // Animation for Title Chars
-    gsap.fromTo(
-      title.chars,
-      { opacity: 0, y: '100%' },
-      {
-        opacity: 1,
-        y: '0%',
-        stagger: 0.05,
-        duration: 0.8,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: titleRef.current,
-          start: 'top 80%',
-          toggleActions: 'play reverse play reverse', // Repeat on scroll in/out
-        },
-      }
-    );
-
-    // Animation for Subtitle Words
-    gsap.fromTo(
-      subtitle.words,
-      { opacity: 0, y: 20 },
-      {
-        opacity: 1,
-        y: 0,
-        stagger: 0.1,
-        duration: 0.6,
-        ease: 'power2.out',
-        delay: 0.2,
-        scrollTrigger: {
-          trigger: subtitleRef.current,
-          start: 'top 80%',
-          toggleActions: 'play reverse play reverse', // Repeat on scroll in/out
-        },
-      }
-    );
-
-    // Animation for Features
-    featuresRefs.current.forEach((feature, index) => {
-      if (!feature) return; // Ensure feature element exists
-      gsap.fromTo(
-        feature,
-        { opacity: 0, y: 20 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          ease: 'power2.out',
-          delay: 0.3 + index * 0.1,
-          scrollTrigger: {
-            trigger: feature,
-            start: 'top 80%',
-            toggleActions: 'play reverse play reverse', // Repeat on scroll in/out
-          },
+    useEffect(() => {
+        if (inView) {
+            controls.start("visible");
+        } else {
+            // Reset animation when out of view to trigger again on scroll in
+            controls.start("hidden");
         }
-      );
-    });
+    }, [controls, inView]);
 
-    // Animation for Download Button
-    gsap.fromTo(
-      downloadButtonRef.current,
-      { opacity: 0, x: -20 },
-      {
-        opacity: 1,
-        x: 0,
-        duration: 0.6,
-        ease: 'power2.out',
-        delay: 0.5,
-        scrollTrigger: {
-          trigger: downloadButtonRef.current,
-          start: 'top 80%',
-          toggleActions: 'play reverse play reverse', // Repeat on scroll in/out
+    // Animation variants matching other sections
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.1,
+                delayChildren: 0.2,
+            },
         },
-      }
-    );
-
-    // Animation for Enquire Button
-    gsap.fromTo(
-      enquireButtonRef.current,
-      { opacity: 0, x: 20 },
-      {
-        opacity: 1,
-        x: 0,
-        duration: 0.6,
-        ease: 'power2.out',
-        delay: 0.7,
-        scrollTrigger: {
-          trigger: enquireButtonRef.current,
-          start: 'top 80%',
-          toggleActions: 'play reverse play reverse', // Repeat on scroll in/out
-        },
-      }
-    );
-
-     // Cleanup function for ScrollTriggers
-     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
 
-  }, []); // Empty dependency array ensures this runs only once on mount
+    const itemVariants = {
+        hidden: { opacity: 0, y: 30 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+    };
 
-  return (
-    <section
-      ref={sectionRef}
-      className="relative py-12 px-4 text-white bg-cover bg-center rounded-[40px] mx-3 mt-20"
-      style={{
-        backgroundColor: '#d4af37',
-      }}
-    >
-      <div className="relative z-10 max-w-7xl mx-auto text-center ">
-        {/* Added overflow-hidden to parent to prevent text overflow during SplitType animation */}
-        <h2 ref={titleRef} className="text-4xl lg:text-5xl font-primary text-[#9b111e] mb-6 overflow-hidden">
-          Work Meets Comfort
-        </h2>
-        <p ref={subtitleRef} className="text-lg md:text-xl text-gray-800 mb-10 overflow-hidden">
-          Your ideal base in Vizag for meetings, conferences, and business trips.
-        </p>
+    const featuresGridVariants = {
+         hidden: { opacity: 0 },
+         visible: {
+             opacity: 1,
+             transition: {
+                 staggerChildren: 0.08, // Slightly faster stagger for more items
+                 delayChildren: 0.3, // Delay after title/subtitle
+             }
+         }
+    };
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-12 px-4">
-          {["Conference Room (20–50 pax)", "High-Speed Wi-Fi & AV Setup", "Early Check-in & Late Check-out", "Airport Transfers", "Corporate Packages"].map((item, index) => (
-            <div
-              key={index}
-              ref={(el) => (featuresRefs.current[index] = el)}
-              className="p-6 bg-[#9b111a] rounded-md text-white hover:bg-[#ac1c26] transition"
-            >
-              <h3 className="font-primary text-xl">{item}</h3>
+    const featureItemVariants = {
+        hidden: { opacity: 0, y: 20 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+    };
+
+     const buttonVariants = {
+        hidden: { opacity: 0, scale: 0.8 },
+        visible: { opacity: 1, scale: 1, transition: { duration: 0.6, ease: 'easeOut', delay: 0.2 } }, // Delay relative to its container
+     };
+
+
+    const features = ["Conference Room (20–50 pax)", "High-Speed Wi-Fi & AV Setup", "Early Check-in & Late Check-out", "Airport Transfers", "Corporate Packages", "Dedicated Support Staff"]; // Added one more for potentially better grid layout
+
+    return (
+        <motion.section
+            ref={ref}
+            variants={containerVariants}
+            initial="hidden"
+            animate={controls}
+            className="py-[110px] bg-gradient-to-br from-gray-900 to-[#9b111e] mx-2 rounded-3xl overflow-hidden text-white mt-7" // Apply theme and base styles
+        >
+             <div className="Container"> {/* Assuming "Container" class provides max-width and centering */}
+
+                {/* Header section mimicking other sections */}
+                <div className="text-center mx-auto px-5 sm:px-8 md:px-[80px] lg:px-[120px] xl:px-[200px] 2xl:px-[335px]">
+                    <motion.div className="flex items-center justify-center space-x-2 mb-4 lg:mb-5" variants={itemVariants}>
+                        <hr className="w-[100px] h-[1px] bg-[#3b3b3b] border-none" /> {/* Use theme color, ensure border-none */}
+                        <a href="/" aria-label="Homepage"> {/* Added aria-label */}
+                             <LogoWhite className="w-[50px] h-[50px]" /> {/* Assuming LogoWhite is a component, adjust size if needed */}
+                        </a>
+                        <hr className="w-[100px] h-[1px] bg-[#3b3b3b] border-none" /> {/* Use theme color, ensure border-none */}
+                    </motion.div>
+                    <motion.h2 className="text-2xl md:text-3xl 2xl:text-[38px] leading-[38px] lg:leading-[44px] 2xl:leading-[52px] text-white mb-[6px] font-Garamond font-semibold uppercase" variants={itemVariants}>
+                         WORK MEETS COMFORT
+                    </motion.h2>
+                    <motion.p className="font-Lora leading-[26px] text-lightGray font-normal text-sm sm:text-base" variants={itemVariants}>
+                        Your ideal base in Vizag for meetings, conferences, and business trips.
+                    </motion.p>
+                </div>
+
+                {/* Features Grid */}
+                <motion.div
+                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 xl:gap-8 mt-10 md:mt-12 px-5 md:px-8 lg:px-10 xl:px-28" // Apply theme spacing and padding
+                    variants={featuresGridVariants} // Animate the grid container
+                >
+                    {features.map((item, index) => (
+                        <motion.div
+                            key={index}
+                            className="p-6 bg-[#272727] rounded-md text-white hover:bg-[#3a3a3a] transition duration-300 border border-[#343434] text-center" // Apply theme styles
+                            variants={featureItemVariants} // Animate individual features
+                        >
+                            <h3 className="font-Garamond text-xl font-medium">{item}</h3>
+                        </motion.div>
+                    ))}
+                </motion.div>
+
+                {/* Action Buttons */}
+                <motion.div
+                    className="flex flex-col sm:flex-row justify-center gap-6 mt-12 px-5 md:px-8 lg:px-10 xl:px-28" // Apply theme spacing and padding
+                    variants={containerVariants} // Use container variants for staggering buttons
+                >
+                    <motion.a
+                        href="#" // Replace with actual download link
+                        className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#daa520] text-black border border-[#daa520] rounded-lg text-lg font-semibold transition-colors duration-300 hover:bg-[#b8860b] hover:border-[#b8860b] font-Garamond" // Apply theme styles
+                        variants={buttonVariants} // Animate button
+                        whileHover={{ scale: 1.05 }} // Add hover effect
+                        whileTap={{ scale: 0.95 }} // Add tap effect
+                    >
+                        <FaDownload />
+                        Download Business Brochure
+                    </motion.a>
+                    <motion.a
+                        href="#" // Replace with actual enquire link
+                        className="inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-white text-white rounded-lg text-lg font-semibold transition-colors duration-300 hover:bg-white/20 font-Garamond" // Apply theme styles
+                        variants={buttonVariants} // Animate button
+                         whileHover={{ scale: 1.05 }} // Add hover effect
+                        whileTap={{ scale: 0.95 }} // Add tap effect
+                    >
+                        <FaEnvelope />
+                        Enquire for Event
+                    </motion.a>
+                </motion.div>
+
             </div>
-          ))}
-        </div>
-
-        {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row justify-center gap-6">
-          <button
-            ref={downloadButtonRef}
-            className="flex items-center justify-center gap-2 px-6 py-3 bg-white hover:bg-gray-100 text-gray-900 rounded-full text-lg font-primary transition"
-          >
-            <FaDownload />
-            Download Business Brochure
-          </button>
-          <button
-            ref={enquireButtonRef}
-            className="flex items-center justify-center gap-2 px-6 py-3 border-2 border-white text-white hover:bg-white/20 rounded-full text-lg font-primary transition"
-          >
-            <FaEnvelope />
-            Enquire for Event
-          </button>
-        </div>
-      </div>
-    </section>
-  );
+        </motion.section>
+    );
 };
 
 export default BusinessTravelers;
