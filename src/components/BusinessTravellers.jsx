@@ -2,25 +2,22 @@ import React, { useEffect } from 'react';
 import { FaDownload, FaEnvelope } from 'react-icons/fa';
 import { motion, useAnimation } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { LogoWhite } from "../assets"; // Assuming LogoWhite is correctly imported
-
+import { LogoWhite } from "../assets"; 
 const BusinessTravelers = () => {
     const controls = useAnimation();
     const [ref, inView] = useInView({
-        threshold: 0.1, // Adjust as needed
-        triggerOnce: false, // Animation triggers every time it comes into view
+        threshold: 0.1, 
+        triggerOnce: false, 
     });
 
     useEffect(() => {
         if (inView) {
             controls.start("visible");
         } else {
-            // Reset animation when out of view to trigger again on scroll in
             controls.start("hidden");
         }
     }, [controls, inView]);
 
-    // Animation variants matching other sections
     const containerVariants = {
         hidden: { opacity: 0 },
         visible: {
@@ -42,8 +39,8 @@ const BusinessTravelers = () => {
          visible: {
              opacity: 1,
              transition: {
-                 staggerChildren: 0.08, // Slightly faster stagger for more items
-                 delayChildren: 0.3, // Delay after title/subtitle
+                 staggerChildren: 0.08, 
+                 delayChildren: 0.3, 
              }
          }
     };
@@ -55,7 +52,7 @@ const BusinessTravelers = () => {
 
      const buttonVariants = {
         hidden: { opacity: 0, scale: 0.8 },
-        visible: { opacity: 1, scale: 1, transition: { duration: 0.6, ease: 'easeOut', delay: 0.2 } }, // Delay relative to its container
+        visible: { opacity: 1, scale: 1, transition: { duration: 0.6, ease: 'easeOut', delay: 0.2 } }, 
      };
 
 
@@ -67,18 +64,15 @@ const BusinessTravelers = () => {
             variants={containerVariants}
             initial="hidden"
             animate={controls}
-            className="py-[110px] bg-gradient-to-br from-gray-900 to-[#9b111e] mx-2 rounded-3xl overflow-hidden text-white mt-7" // Apply theme and base styles
-        >
-             <div className="Container"> {/* Assuming "Container" class provides max-width and centering */}
-
-                {/* Header section mimicking other sections */}
+            className="py-[110px] bg-gradient-to-br from-gray-900 to-[#9b111e] mx-2 rounded-3xl overflow-hidden text-white mt-7">
+             <div className="Container"> 
                 <div className="text-center mx-auto px-5 sm:px-8 md:px-[80px] lg:px-[120px] xl:px-[200px] 2xl:px-[335px]">
                     <motion.div className="flex items-center justify-center space-x-2 mb-4 lg:mb-5" variants={itemVariants}>
-                        <hr className="w-[100px] h-[1px] bg-[#3b3b3b] border-none" /> {/* Use theme color, ensure border-none */}
-                        <a href="/" aria-label="Homepage"> {/* Added aria-label */}
-                             <LogoWhite className="w-[50px] h-[50px]" /> {/* Assuming LogoWhite is a component, adjust size if needed */}
+                        <hr className="w-[100px] h-[1px] bg-[#3b3b3b] border-none" /> 
+                        <a href="/" aria-label="Homepage">
+                             <LogoWhite className="w-[50px] h-[50px]" /> 
                         </a>
-                        <hr className="w-[100px] h-[1px] bg-[#3b3b3b] border-none" /> {/* Use theme color, ensure border-none */}
+                        <hr className="w-[100px] h-[1px] bg-[#3b3b3b] border-none" /> 
                     </motion.div>
                     <motion.h2 className="text-2xl md:text-3xl 2xl:text-[38px] leading-[38px] lg:leading-[44px] 2xl:leading-[52px] text-white mb-[6px] font-Garamond font-semibold uppercase" variants={itemVariants}>
                          WORK MEETS COMFORT
@@ -88,43 +82,41 @@ const BusinessTravelers = () => {
                     </motion.p>
                 </div>
 
-                {/* Features Grid */}
                 <motion.div
                     className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 xl:gap-8 mt-10 md:mt-12 px-5 md:px-8 lg:px-10 xl:px-28" // Apply theme spacing and padding
-                    variants={featuresGridVariants} // Animate the grid container
+                    variants={featuresGridVariants}
                 >
                     {features.map((item, index) => (
                         <motion.div
                             key={index}
                             className="p-6 bg-[#272727] rounded-md text-white hover:bg-[#3a3a3a] transition duration-300 border border-[#343434] text-center" // Apply theme styles
-                            variants={featureItemVariants} // Animate individual features
+                            variants={featureItemVariants} 
                         >
                             <h3 className="font-Garamond text-xl font-medium">{item}</h3>
                         </motion.div>
                     ))}
                 </motion.div>
 
-                {/* Action Buttons */}
                 <motion.div
                     className="flex flex-col sm:flex-row justify-center gap-6 mt-12 px-5 md:px-8 lg:px-10 xl:px-28" // Apply theme spacing and padding
-                    variants={containerVariants} // Use container variants for staggering buttons
+                    variants={containerVariants} 
                 >
                     <motion.a
-                        href="#" // Replace with actual download link
+                        href="#" 
                         className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#daa520] text-black border border-[#daa520] rounded-lg text-lg font-semibold transition-colors duration-300 hover:bg-[#b8860b] hover:border-[#b8860b] font-Garamond" // Apply theme styles
-                        variants={buttonVariants} // Animate button
-                        whileHover={{ scale: 1.05 }} // Add hover effect
-                        whileTap={{ scale: 0.95 }} // Add tap effect
+                        variants={buttonVariants} 
+                        whileHover={{ scale: 1.05 }} 
+                        whileTap={{ scale: 0.95 }} 
                     >
                         <FaDownload />
                         Download Business Brochure
                     </motion.a>
                     <motion.a
-                        href="#" // Replace with actual enquire link
+                        href="#" 
                         className="inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-white text-white rounded-lg text-lg font-semibold transition-colors duration-300 hover:bg-white/20 font-Garamond" // Apply theme styles
-                        variants={buttonVariants} // Animate button
-                         whileHover={{ scale: 1.05 }} // Add hover effect
-                        whileTap={{ scale: 0.95 }} // Add tap effect
+                        variants={buttonVariants} 
+                         whileHover={{ scale: 1.05 }} 
+                        whileTap={{ scale: 0.95 }} 
                     >
                         <FaEnvelope />
                         Enquire for Event
